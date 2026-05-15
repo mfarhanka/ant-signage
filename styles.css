@@ -10,6 +10,7 @@
   --lighting-intensity: 0.62;
   --font-size: 84px;
   --texture-opacity: 0.22;
+  --stage-scale: 1;
 }
 
 * {
@@ -282,6 +283,20 @@ button.danger {
   outline: 1px solid rgba(217, 4, 41, 0.5);
 }
 
+.zoom-header {
+  align-items: baseline;
+}
+
+.zoom-value {
+  color: #f5f7fb;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}
+
+.zoom-actions button {
+  flex: 1;
+}
+
 .sign-stage {
   position: relative;
   min-height: 620px;
@@ -289,6 +304,14 @@ button.danger {
   border-radius: 30px;
   background: var(--stage-bg);
   isolation: isolate;
+}
+
+.stage-viewport {
+  position: absolute;
+  inset: 0;
+  transform: scale(var(--stage-scale));
+  transform-origin: center center;
+  transition: transform 180ms ease;
 }
 
 .stage-frame,
@@ -507,6 +530,10 @@ button.danger {
   .button-row,
   .list-header {
     flex-direction: column;
+    align-items: stretch;
+  }
+
+  .zoom-header {
     align-items: stretch;
   }
 

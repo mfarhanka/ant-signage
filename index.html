@@ -101,6 +101,22 @@
         </div>
 
         <div class="control-group">
+          <div class="list-header zoom-header">
+            <span>Signage zoom</span>
+            <strong id="zoomValue" class="zoom-value">100%</strong>
+          </div>
+          <div class="button-row zoom-actions">
+            <button id="zoomOutButton" type="button" class="secondary">Zoom out</button>
+            <button id="zoomResetButton" type="button" class="secondary">Reset</button>
+            <button id="zoomInButton" type="button">Zoom in</button>
+          </div>
+          <div class="control-row">
+            <label for="zoomSlider">Preview scale</label>
+            <input id="zoomSlider" name="zoomSlider" type="range" min="50" max="200" value="100">
+          </div>
+        </div>
+
+        <div class="control-group">
           <div class="list-header">
             <span>Text layers</span>
             <button id="removeTextButton" type="button" class="secondary danger">Remove selected</button>
@@ -120,10 +136,12 @@
       </div>
 
       <div id="signStage" class="sign-stage texture-grid light-halo">
-        <div class="stage-frame"></div>
-        <div class="light-pass light-pass-a"></div>
-        <div class="light-pass light-pass-b"></div>
-        <div id="signTextStack" class="sign-text-stack" aria-live="polite"></div>
+        <div id="stageViewport" class="stage-viewport">
+          <div class="stage-frame"></div>
+          <div class="light-pass light-pass-a"></div>
+          <div class="light-pass light-pass-b"></div>
+          <div id="signTextStack" class="sign-text-stack" aria-live="polite"></div>
+        </div>
       </div>
     </section>
   </main>

@@ -7,7 +7,8 @@ const state = {
   texture: "grid",
   lighting: "halo",
   toolbarExpanded: true,
-  toolbarSide: "left"
+  toolbarSide: "left",
+  zoom: 100
 };
 
 const elements = {
@@ -15,6 +16,11 @@ const elements = {
   toolbarToggle: document.querySelector("#toolbarToggle"),
   toolbarToggleIcon: document.querySelector("#toolbarToggleIcon"),
   toolbarSide: document.querySelector("#toolbarSide"),
+  zoomSlider: document.querySelector("#zoomSlider"),
+  zoomValue: document.querySelector("#zoomValue"),
+  zoomOutButton: document.querySelector("#zoomOutButton"),
+  zoomResetButton: document.querySelector("#zoomResetButton"),
+  zoomInButton: document.querySelector("#zoomInButton"),
   textInput: document.querySelector("#textInput"),
   fontSize: document.querySelector("#fontSize"),
   textColor: document.querySelector("#textColor"),
@@ -30,6 +36,7 @@ const elements = {
   removeTextButton: document.querySelector("#removeTextButton"),
   layerList: document.querySelector("#layerList"),
   stage: document.querySelector("#signStage"),
+  stageViewport: document.querySelector("#stageViewport"),
   signTextStack: document.querySelector("#signTextStack"),
   stageSummary: document.querySelector("#stageSummary"),
   layerItemTemplate: document.querySelector("#layerItemTemplate")
@@ -44,6 +51,21 @@ function renderToolbar() {
   elements.toolbarToggle.setAttribute("aria-expanded", String(state.toolbarExpanded));
   elements.toolbarToggleIcon.textContent = state.toolbarExpanded ? "Collapse" : "Expand";
   elements.toolbarSide.value = state.toolbarSide;
+}
+
+function clampZoom(value) {
+  return Math.min(200, Math.max(50, value));
+}
+
+function renderZoom() {
+  elements.zoomSlider.value = String(state.zoom);
+  elements.zoomValue.textContent = `${state.zoom}%`;
+  document.documentElement.style.setProperty("--stage-scale", String(state.zoom / 100));
+}
+
+function setZoom(nextZoom) {
+  state.zoom = clampZoom(nextZoom);
+  renderZoom();
 }
 
 function escapeHtml(value) {
@@ -93,7 +115,7 @@ function renderStage() {
     .join("");
 
   elements.stage.className = `sign-stage texture-${state.texture} light-${state.lighting}`;
-  elements.stageSummary.textContent = `${state.layers.length} layer${state.layers.length === 1 ? "" : "s"} · ${elements.textureSelect.selectedOptions[0].textContent.toLowerCase()} · ${elements.lightPreset.selectedOptions[0].textContent.toLowerCase()}`;
+  elements.stageSummary.textContent = `${state.layers.length} layer${state.layers.length === 1 ? "" : "s"} · ${elements.textureSelect.selectedOptions[0].textContent.toLowerCase()} · ${elements.lightPreset.selectedOptions[0].textContent.toLowerCase()} · ${state.zoom}% zoom`;
 }
 
 function updateStageVariables() {
@@ -148,6 +170,22 @@ function removeSelectedLayer() {
 elements.addTextButton.addEventListener("click", addLayer);
 elements.updateTextButton.addEventListener("click", updateSelectedLayer);
 elements.removeTextButton.addEventListener("click", removeSelectedLayer);
+elements.zoomSlider.addEventListener("input", () => {
+  setZoom(Number(elements.zoomSlider.value));
+  renderStage();
+});
+elements.zoomOutButton.addEventListener("click", () => {
+  setZoom(state.zoom - 10);
+  renderStage();
+});
+elements.zoomResetButton.addEventListener("click", () => {
+  setZoom(100);
+  renderStage();
+});
+elements.zoomInButton.addEventListener("click", () => {
+  setZoom(state.zoom + 10);
+  renderStage();
+});
 elements.toolbarToggle.addEventListener("click", () => {
   state.toolbarExpanded = !state.toolbarExpanded;
   renderToolbar();
@@ -190,8 +228,16 @@ elements.fontSize.addEventListener("input", () => {
   renderStage();
 });
 
+elements.stage.addEventListener("wheel", (event) => {
+  event.preventDefault();
+  const delta = event.deltaY > 0 ? -10 : 10;
+  setZoom(state.zoom + delta);
+  renderStage();
+}, { passive: false });
+
 syncInputsWithSelection();
 updateStageVariables();
 renderToolbar();
+renderZoom();
 renderLayers();
 renderStage();
