@@ -12,6 +12,7 @@ const state = {
 };
 
 const elements = {
+  appShell: document.querySelector(".app-shell"),
   toolbar: document.querySelector("#toolbar"),
   toolbarToggle: document.querySelector("#toolbarToggle"),
   toolbarToggleIcon: document.querySelector("#toolbarToggleIcon"),
@@ -51,6 +52,16 @@ function renderToolbar() {
   elements.toolbarToggle.setAttribute("aria-expanded", String(state.toolbarExpanded));
   elements.toolbarToggleIcon.textContent = state.toolbarExpanded ? "Collapse" : "Expand";
   elements.toolbarSide.value = state.toolbarSide;
+
+  const isNarrowViewport = window.innerWidth <= 980;
+  const toolbarWidth = elements.toolbar.offsetWidth;
+  const toolbarHeight = state.toolbarExpanded ? elements.toolbar.offsetHeight : elements.toolbarToggle.offsetHeight;
+  const topOffset = isNarrowViewport ? `${toolbarHeight + 16}px` : "0px";
+  const leftOffset = !isNarrowViewport && state.toolbarSide === "left" ? `${toolbarWidth + 16}px` : "0px";
+  const rightOffset = !isNarrowViewport && state.toolbarSide === "right" ? `${toolbarWidth + 16}px` : "0px";
+  elements.appShell.style.setProperty("--toolbar-offset-top", topOffset);
+  elements.appShell.style.setProperty("--toolbar-offset-left", leftOffset);
+  elements.appShell.style.setProperty("--toolbar-offset-right", rightOffset);
 }
 
 function clampZoom(value) {
@@ -234,6 +245,8 @@ elements.stage.addEventListener("wheel", (event) => {
   setZoom(state.zoom + delta);
   renderStage();
 }, { passive: false });
+
+window.addEventListener("resize", renderToolbar);
 
 syncInputsWithSelection();
 updateStageVariables();
