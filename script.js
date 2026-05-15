@@ -1,0 +1,172 @@
+const state = {
+  layers: [
+    { id: crypto.randomUUID(), text: "ANT SIGNAGE", size: 84 },
+    { id: crypto.randomUUID(), text: "OPEN LATE", size: 44, subtle: true }
+  ],
+  selectedLayerId: null,
+  texture: "grid",
+  lighting: "halo"
+};
+
+const elements = {
+  textInput: document.querySelector("#textInput"),
+  fontSize: document.querySelector("#fontSize"),
+  textColor: document.querySelector("#textColor"),
+  glowColor: document.querySelector("#glowColor"),
+  bgColor: document.querySelector("#bgColor"),
+  lightingColor: document.querySelector("#lightingColor"),
+  textureSelect: document.querySelector("#textureSelect"),
+  lightPreset: document.querySelector("#lightPreset"),
+  lightingIntensity: document.querySelector("#lightingIntensity"),
+  glowStrength: document.querySelector("#glowStrength"),
+  addTextButton: document.querySelector("#addTextButton"),
+  updateTextButton: document.querySelector("#updateTextButton"),
+  removeTextButton: document.querySelector("#removeTextButton"),
+  layerList: document.querySelector("#layerList"),
+  stage: document.querySelector("#signStage"),
+  signTextStack: document.querySelector("#signTextStack"),
+  stageSummary: document.querySelector("#stageSummary"),
+  layerItemTemplate: document.querySelector("#layerItemTemplate")
+};
+
+state.selectedLayerId = state.layers[0].id;
+
+function escapeHtml(value) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function syncInputsWithSelection() {
+  const selectedLayer = state.layers.find((layer) => layer.id === state.selectedLayerId) ?? state.layers[0];
+
+  if (!selectedLayer) {
+    elements.textInput.value = "";
+    return;
+  }
+
+  elements.textInput.value = selectedLayer.text;
+  elements.fontSize.value = selectedLayer.size;
+}
+
+function renderLayers() {
+  elements.layerList.innerHTML = "";
+
+  state.layers.forEach((layer, index) => {
+    const fragment = elements.layerItemTemplate.content.cloneNode(true);
+    const button = fragment.querySelector(".layer-chip");
+    button.textContent = `${index + 1}. ${layer.text}`;
+    button.classList.toggle("active", layer.id === state.selectedLayerId);
+    button.addEventListener("click", () => {
+      state.selectedLayerId = layer.id;
+      syncInputsWithSelection();
+      renderLayers();
+    });
+    elements.layerList.appendChild(fragment);
+  });
+}
+
+function renderStage() {
+  elements.signTextStack.innerHTML = state.layers
+    .map((layer) => {
+      const className = layer.subtle ? "sign-text subtle" : "sign-text";
+      return `<div class="${className}" style="font-size:${layer.size}px;">${escapeHtml(layer.text)}</div>`;
+    })
+    .join("");
+
+  elements.stage.className = `sign-stage texture-${state.texture} light-${state.lighting}`;
+  elements.stageSummary.textContent = `${state.layers.length} layer${state.layers.length === 1 ? "" : "s"} · ${elements.textureSelect.selectedOptions[0].textContent.toLowerCase()} · ${elements.lightPreset.selectedOptions[0].textContent.toLowerCase()}`;
+}
+
+function updateStageVariables() {
+  document.documentElement.style.setProperty("--text-color", elements.textColor.value);
+  document.documentElement.style.setProperty("--glow-color", elements.glowColor.value);
+  document.documentElement.style.setProperty("--stage-bg", elements.bgColor.value);
+  document.documentElement.style.setProperty("--lighting-color", elements.lightingColor.value);
+  document.documentElement.style.setProperty("--lighting-intensity", String(Number(elements.lightingIntensity.value) / 100));
+  document.documentElement.style.setProperty("--glow-strength", elements.glowStrength.value);
+}
+
+function addLayer() {
+  const text = elements.textInput.value.trim() || `NEW LAYER ${state.layers.length + 1}`;
+  const layer = {
+    id: crypto.randomUUID(),
+    text,
+    size: Number(elements.fontSize.value),
+    subtle: state.layers.length > 0
+  };
+
+  state.layers.push(layer);
+  state.selectedLayerId = layer.id;
+  renderLayers();
+  renderStage();
+}
+
+function updateSelectedLayer() {
+  const layer = state.layers.find((item) => item.id === state.selectedLayerId);
+
+  if (!layer) {
+    return;
+  }
+
+  layer.text = elements.textInput.value.trim() || layer.text;
+  layer.size = Number(elements.fontSize.value);
+  renderLayers();
+  renderStage();
+}
+
+function removeSelectedLayer() {
+  if (state.layers.length === 1) {
+    return;
+  }
+
+  state.layers = state.layers.filter((layer) => layer.id !== state.selectedLayerId);
+  state.selectedLayerId = state.layers[0]?.id ?? null;
+  syncInputsWithSelection();
+  renderLayers();
+  renderStage();
+}
+
+elements.addTextButton.addEventListener("click", addLayer);
+elements.updateTextButton.addEventListener("click", updateSelectedLayer);
+elements.removeTextButton.addEventListener("click", removeSelectedLayer);
+
+elements.textureSelect.addEventListener("change", () => {
+  state.texture = elements.textureSelect.value;
+  renderStage();
+});
+
+elements.lightPreset.addEventListener("change", () => {
+  state.lighting = elements.lightPreset.value;
+  renderStage();
+});
+
+[
+  elements.textColor,
+  elements.glowColor,
+  elements.bgColor,
+  elements.lightingColor,
+  elements.lightingIntensity,
+  elements.glowStrength
+].forEach((control) => {
+  control.addEventListener("input", updateStageVariables);
+});
+
+elements.fontSize.addEventListener("input", () => {
+  const layer = state.layers.find((item) => item.id === state.selectedLayerId);
+
+  if (!layer) {
+    return;
+  }
+
+  layer.size = Number(elements.fontSize.value);
+  renderStage();
+});
+
+syncInputsWithSelection();
+updateStageVariables();
+renderLayers();
+renderStage();
