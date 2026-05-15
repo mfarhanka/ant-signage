@@ -14,6 +14,7 @@ const state = {
 const elements = {
   appShell: document.querySelector(".app-shell"),
   toolbar: document.querySelector("#toolbar"),
+  toolbarContent: document.querySelector("#toolbarContent"),
   toolbarToggle: document.querySelector("#toolbarToggle"),
   toolbarToggleIcon: document.querySelector("#toolbarToggleIcon"),
   toolbarSide: document.querySelector("#toolbarSide"),
@@ -57,8 +58,9 @@ function renderToolbar() {
   const toolbarWidth = elements.toolbar.offsetWidth;
   const toolbarHeight = state.toolbarExpanded ? elements.toolbar.offsetHeight : elements.toolbarToggle.offsetHeight;
   const topOffset = isNarrowViewport ? `${toolbarHeight + 16}px` : "0px";
-  const leftOffset = !isNarrowViewport && state.toolbarSide === "left" ? `${toolbarWidth + 16}px` : "0px";
-  const rightOffset = !isNarrowViewport && state.toolbarSide === "right" ? `${toolbarWidth + 16}px` : "0px";
+  const desktopOffset = `${toolbarWidth + 16}px`;
+  const leftOffset = !isNarrowViewport && state.toolbarSide === "left" ? desktopOffset : "0px";
+  const rightOffset = !isNarrowViewport && state.toolbarSide === "right" ? desktopOffset : "0px";
   elements.appShell.style.setProperty("--toolbar-offset-top", topOffset);
   elements.appShell.style.setProperty("--toolbar-offset-left", leftOffset);
   elements.appShell.style.setProperty("--toolbar-offset-right", rightOffset);
