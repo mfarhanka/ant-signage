@@ -80,9 +80,14 @@ select {
   height: 100%;
   overflow: auto;
   display: grid;
-  gap: 22px;
-  padding: 28px;
+  gap: 14px;
+  padding: 18px;
   border-left: 1px solid rgba(255, 255, 255, 0.06);
+  scrollbar-width: none;
+}
+
+.toolbar-content::-webkit-scrollbar {
+  display: none;
 }
 
 .toolbar-left .toolbar-content {
@@ -170,8 +175,8 @@ select {
 }
 
 .panel-copy h1 {
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  line-height: 1.04;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.1;
 }
 
 .intro,
@@ -182,17 +187,17 @@ select {
 }
 
 .eyebrow {
-  margin: 0 0 10px;
+  margin: 0 0 6px;
   color: #d64045;
-  font-size: 0.8rem;
-  letter-spacing: 0.24em;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 .control-group {
   display: grid;
-  gap: 14px;
-  padding: 18px;
+  gap: 10px;
+  padding: 14px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.025);
