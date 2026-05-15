@@ -5,10 +5,16 @@ const state = {
   ],
   selectedLayerId: null,
   texture: "grid",
-  lighting: "halo"
+  lighting: "halo",
+  toolbarExpanded: true,
+  toolbarSide: "left"
 };
 
 const elements = {
+  toolbar: document.querySelector("#toolbar"),
+  toolbarToggle: document.querySelector("#toolbarToggle"),
+  toolbarToggleIcon: document.querySelector("#toolbarToggleIcon"),
+  toolbarSide: document.querySelector("#toolbarSide"),
   textInput: document.querySelector("#textInput"),
   fontSize: document.querySelector("#fontSize"),
   textColor: document.querySelector("#textColor"),
@@ -30,6 +36,15 @@ const elements = {
 };
 
 state.selectedLayerId = state.layers[0].id;
+
+function renderToolbar() {
+  elements.toolbar.classList.toggle("is-expanded", state.toolbarExpanded);
+  elements.toolbar.classList.toggle("toolbar-left", state.toolbarSide === "left");
+  elements.toolbar.classList.toggle("toolbar-right", state.toolbarSide === "right");
+  elements.toolbarToggle.setAttribute("aria-expanded", String(state.toolbarExpanded));
+  elements.toolbarToggleIcon.textContent = state.toolbarExpanded ? "Collapse" : "Expand";
+  elements.toolbarSide.value = state.toolbarSide;
+}
 
 function escapeHtml(value) {
   return value
@@ -133,6 +148,15 @@ function removeSelectedLayer() {
 elements.addTextButton.addEventListener("click", addLayer);
 elements.updateTextButton.addEventListener("click", updateSelectedLayer);
 elements.removeTextButton.addEventListener("click", removeSelectedLayer);
+elements.toolbarToggle.addEventListener("click", () => {
+  state.toolbarExpanded = !state.toolbarExpanded;
+  renderToolbar();
+});
+
+elements.toolbarSide.addEventListener("change", () => {
+  state.toolbarSide = elements.toolbarSide.value;
+  renderToolbar();
+});
 
 elements.textureSelect.addEventListener("change", () => {
   state.texture = elements.textureSelect.value;
@@ -168,5 +192,6 @@ elements.fontSize.addEventListener("input", () => {
 
 syncInputsWithSelection();
 updateStageVariables();
+renderToolbar();
 renderLayers();
 renderStage();

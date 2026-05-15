@@ -11,87 +11,104 @@
 </head>
 <body>
   <main class="app-shell">
-    <section class="control-panel">
-      <div class="panel-copy">
-        <p class="eyebrow">Live Signage Designer</p>
-        <h1>Build a display with editable text, light, texture, and color.</h1>
-        <p class="intro">Adjust the scene on the left and watch the signage update in real time. Add multiple text layers, tune the glow, and switch the backdrop feel.</p>
-      </div>
+    <aside id="toolbar" class="toolbar toolbar-left is-expanded" aria-label="Design toolbar">
+      <button id="toolbarToggle" class="toolbar-handle" type="button" aria-expanded="true" aria-controls="toolbarContent">
+        <span class="toolbar-handle-title">Design tools</span>
+        <span id="toolbarToggleIcon" class="toolbar-handle-icon">Collapse</span>
+      </button>
 
-      <div class="control-group">
-        <div class="control-row">
-          <label for="textInput">Text content</label>
-          <input id="textInput" name="textInput" type="text" maxlength="48" placeholder="Enter signage text">
+      <section id="toolbarContent" class="toolbar-content">
+        <div class="panel-copy">
+          <p class="eyebrow">Live Signage Designer</p>
+          <h1>Build a display with editable text, light, texture, and color.</h1>
+          <p class="intro">Use the docked toolbar on either side, expand it when you need controls, and keep the stage visible while you design.</p>
         </div>
-        <div class="button-row">
-          <button id="addTextButton" type="button">Add text</button>
-          <button id="updateTextButton" type="button" class="secondary">Update selected</button>
-        </div>
-        <div class="control-row">
-          <label for="fontSize">Font size</label>
-          <input id="fontSize" name="fontSize" type="range" min="32" max="144" value="84">
-        </div>
-      </div>
 
-      <div class="control-group split-grid">
-        <div class="control-row">
-          <label for="textColor">Text color</label>
-          <input id="textColor" name="textColor" type="color" value="#ffe082">
+        <div class="control-group compact-grid">
+          <div class="control-row">
+            <label for="toolbarSide">Toolbar side</label>
+            <select id="toolbarSide" name="toolbarSide">
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+            </select>
+          </div>
         </div>
-        <div class="control-row">
-          <label for="glowColor">Glow color</label>
-          <input id="glowColor" name="glowColor" type="color" value="#ff6f3c">
-        </div>
-        <div class="control-row">
-          <label for="bgColor">Background color</label>
-          <input id="bgColor" name="bgColor" type="color" value="#132238">
-        </div>
-        <div class="control-row">
-          <label for="lightingColor">Lighting color</label>
-          <input id="lightingColor" name="lightingColor" type="color" value="#8ed8ff">
-        </div>
-      </div>
 
-      <div class="control-group split-grid">
-        <div class="control-row">
-          <label for="textureSelect">Background texture</label>
-          <select id="textureSelect" name="textureSelect">
-            <option value="grid">Neon grid</option>
-            <option value="brushed">Brushed metal</option>
-            <option value="grain">Paper grain</option>
-            <option value="velvet">Velvet haze</option>
-          </select>
+        <div class="control-group">
+          <div class="control-row">
+            <label for="textInput">Text content</label>
+            <input id="textInput" name="textInput" type="text" maxlength="48" placeholder="Enter signage text">
+          </div>
+          <div class="button-row">
+            <button id="addTextButton" type="button">Add text</button>
+            <button id="updateTextButton" type="button" class="secondary">Update selected</button>
+          </div>
+          <div class="control-row">
+            <label for="fontSize">Font size</label>
+            <input id="fontSize" name="fontSize" type="range" min="32" max="144" value="84">
+          </div>
         </div>
-        <div class="control-row">
-          <label for="lightPreset">Lighting type</label>
-          <select id="lightPreset" name="lightPreset">
-            <option value="halo">Halo wash</option>
-            <option value="spotlight">Spotlight</option>
-            <option value="neon">Neon edge</option>
-            <option value="sunset">Sunset bloom</option>
-          </select>
-        </div>
-      </div>
 
-      <div class="control-group">
-        <div class="control-row">
-          <label for="lightingIntensity">Lighting intensity</label>
-          <input id="lightingIntensity" name="lightingIntensity" type="range" min="20" max="120" value="62">
+        <div class="control-group split-grid">
+          <div class="control-row">
+            <label for="textColor">Text color</label>
+            <input id="textColor" name="textColor" type="color" value="#ffe082">
+          </div>
+          <div class="control-row">
+            <label for="glowColor">Glow color</label>
+            <input id="glowColor" name="glowColor" type="color" value="#ff6f3c">
+          </div>
+          <div class="control-row">
+            <label for="bgColor">Background color</label>
+            <input id="bgColor" name="bgColor" type="color" value="#132238">
+          </div>
+          <div class="control-row">
+            <label for="lightingColor">Lighting color</label>
+            <input id="lightingColor" name="lightingColor" type="color" value="#8ed8ff">
+          </div>
         </div>
-        <div class="control-row">
-          <label for="glowStrength">Glow strength</label>
-          <input id="glowStrength" name="glowStrength" type="range" min="10" max="120" value="52">
-        </div>
-      </div>
 
-      <div class="control-group">
-        <div class="list-header">
-          <span>Text layers</span>
-          <button id="removeTextButton" type="button" class="secondary danger">Remove selected</button>
+        <div class="control-group split-grid">
+          <div class="control-row">
+            <label for="textureSelect">Background texture</label>
+            <select id="textureSelect" name="textureSelect">
+              <option value="grid">Neon grid</option>
+              <option value="brushed">Brushed metal</option>
+              <option value="grain">Paper grain</option>
+              <option value="velvet">Velvet haze</option>
+            </select>
+          </div>
+          <div class="control-row">
+            <label for="lightPreset">Lighting type</label>
+            <select id="lightPreset" name="lightPreset">
+              <option value="halo">Halo wash</option>
+              <option value="spotlight">Spotlight</option>
+              <option value="neon">Neon edge</option>
+              <option value="sunset">Sunset bloom</option>
+            </select>
+          </div>
         </div>
-        <ul id="layerList" class="layer-list" aria-label="Text layers"></ul>
-      </div>
-    </section>
+
+        <div class="control-group">
+          <div class="control-row">
+            <label for="lightingIntensity">Lighting intensity</label>
+            <input id="lightingIntensity" name="lightingIntensity" type="range" min="20" max="120" value="62">
+          </div>
+          <div class="control-row">
+            <label for="glowStrength">Glow strength</label>
+            <input id="glowStrength" name="glowStrength" type="range" min="10" max="120" value="52">
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="list-header">
+            <span>Text layers</span>
+            <button id="removeTextButton" type="button" class="secondary danger">Remove selected</button>
+          </div>
+          <ul id="layerList" class="layer-list" aria-label="Text layers"></ul>
+        </div>
+      </section>
+    </aside>
 
     <section class="preview-shell">
       <div class="stage-meta">
