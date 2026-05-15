@@ -13,8 +13,8 @@ const state = {
 
 const elements = {
   appShell: document.querySelector(".app-shell"),
+  previewShell: document.querySelector(".preview-shell"),
   toolbar: document.querySelector("#toolbar"),
-  toolbarContent: document.querySelector("#toolbarContent"),
   toolbarToggle: document.querySelector("#toolbarToggle"),
   toolbarToggleIcon: document.querySelector("#toolbarToggleIcon"),
   toolbarSide: document.querySelector("#toolbarSide"),
@@ -54,16 +54,23 @@ function renderToolbar() {
   elements.toolbarToggleIcon.textContent = state.toolbarExpanded ? "Collapse" : "Expand";
   elements.toolbarSide.value = state.toolbarSide;
 
-  const isNarrowViewport = window.innerWidth <= 980;
-  const toolbarWidth = elements.toolbar.offsetWidth;
-  const toolbarHeight = state.toolbarExpanded ? elements.toolbar.offsetHeight : elements.toolbarToggle.offsetHeight;
+  const isNarrowViewport = window.innerWidth <= 760;
+  const collapsedToolbarWidth = elements.toolbarToggle.offsetWidth;
+  const expandedToolbarWidth = Math.min(420, Math.max(280, window.innerWidth * 0.3));
+  const toolbarWidth = state.toolbarExpanded ? expandedToolbarWidth : collapsedToolbarWidth;
+  const toolbarHeight = state.toolbarExpanded ? elements.toolbar.getBoundingClientRect().height : elements.toolbarToggle.offsetHeight;
   const topOffset = isNarrowViewport ? `${toolbarHeight + 16}px` : "0px";
   const desktopOffset = `${toolbarWidth + 16}px`;
   const leftOffset = !isNarrowViewport && state.toolbarSide === "left" ? desktopOffset : "0px";
   const rightOffset = !isNarrowViewport && state.toolbarSide === "right" ? desktopOffset : "0px";
+  const horizontalOffset = !isNarrowViewport ? toolbarWidth + 16 : 0;
   elements.appShell.style.setProperty("--toolbar-offset-top", topOffset);
   elements.appShell.style.setProperty("--toolbar-offset-left", leftOffset);
   elements.appShell.style.setProperty("--toolbar-offset-right", rightOffset);
+  elements.previewShell.style.marginTop = topOffset;
+  elements.previewShell.style.marginLeft = leftOffset;
+  elements.previewShell.style.marginRight = rightOffset;
+  elements.previewShell.style.width = isNarrowViewport ? "auto" : `calc(100% - ${horizontalOffset}px)`;
 }
 
 function clampZoom(value) {
