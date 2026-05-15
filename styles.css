@@ -1,15 +1,15 @@
 :root {
   color-scheme: dark;
-  --panel-bg: rgba(9, 13, 21, 0.88);
-  --panel-border: rgba(255, 255, 255, 0.08);
-  --stage-bg: #132238;
-  --text-color: #ffe082;
-  --glow-color: #ff6f3c;
-  --lighting-color: #8ed8ff;
+  --panel-bg: rgba(16, 16, 18, 0.92);
+  --panel-border: rgba(255, 255, 255, 0.12);
+  --stage-bg: #121212;
+  --text-color: #f2f2f2;
+  --glow-color: #b31217;
+  --lighting-color: #6e6e73;
   --glow-strength: 52;
   --lighting-intensity: 0.62;
   --font-size: 84px;
-  --texture-opacity: 0.3;
+  --texture-opacity: 0.22;
 }
 
 * {
@@ -21,9 +21,9 @@ body {
   min-height: 100vh;
   font-family: "Space Grotesk", sans-serif;
   background:
-    radial-gradient(circle at top, rgba(255, 156, 74, 0.22), transparent 32%),
-    radial-gradient(circle at bottom left, rgba(0, 183, 255, 0.22), transparent 28%),
-    #04070d;
+    radial-gradient(circle at top, rgba(179, 18, 23, 0.28), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(88, 88, 92, 0.22), transparent 34%),
+    #050505;
   color: #f5f7fb;
 }
 
@@ -96,7 +96,7 @@ select {
   gap: 14px;
   border-radius: 0;
   color: #f5f7fb;
-  background: linear-gradient(180deg, rgba(255, 185, 107, 0.18), rgba(255, 124, 77, 0.08));
+  background: linear-gradient(180deg, rgba(179, 18, 23, 0.32), rgba(58, 58, 60, 0.18));
   box-shadow: none;
 }
 
@@ -174,7 +174,7 @@ select {
 
 .eyebrow {
   margin: 0 0 10px;
-  color: #ffb36a;
+  color: #d64045;
   font-size: 0.8rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -184,9 +184,9 @@ select {
   display: grid;
   gap: 14px;
   padding: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.025);
 }
 
 .split-grid {
@@ -207,25 +207,25 @@ select {
 input[type="text"],
 select {
   height: 48px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 14px;
   padding: 0 14px;
-  background: rgba(3, 6, 12, 0.75);
+  background: rgba(10, 10, 11, 0.92);
   color: #f5f7fb;
 }
 
 input[type="range"] {
   width: 100%;
-  accent-color: #ff9a4a;
+  accent-color: #c1121f;
 }
 
 input[type="color"] {
   width: 100%;
   height: 48px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 14px;
   padding: 4px;
-  background: rgba(3, 6, 12, 0.75);
+  background: rgba(10, 10, 11, 0.92);
 }
 
 .button-row,
@@ -240,11 +240,11 @@ button {
   border: 0;
   border-radius: 999px;
   padding: 12px 18px;
-  color: #041019;
-  background: linear-gradient(135deg, #ffcb78, #ff7c4d);
+  color: #f8f8f8;
+  background: linear-gradient(135deg, #d90429, #7f1d1d);
   cursor: pointer;
   transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
-  box-shadow: 0 14px 30px rgba(255, 124, 77, 0.28);
+  box-shadow: 0 14px 30px rgba(127, 29, 29, 0.34);
 }
 
 button:hover {
@@ -253,7 +253,7 @@ button:hover {
 
 button.secondary {
   color: #f5f7fb;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   box-shadow: none;
 }
 
@@ -278,8 +278,8 @@ button.danger {
 }
 
 .layer-chip.active {
-  background: rgba(255, 179, 106, 0.18);
-  outline: 1px solid rgba(255, 179, 106, 0.45);
+  background: rgba(179, 18, 23, 0.18);
+  outline: 1px solid rgba(217, 4, 41, 0.5);
 }
 
 .sign-stage {
@@ -302,7 +302,7 @@ button.danger {
 
 .stage-frame {
   inset: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 22px;
   pointer-events: none;
 }
