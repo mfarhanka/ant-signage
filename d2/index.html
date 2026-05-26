@@ -307,6 +307,8 @@
         };
       }, [boardShape, boardTexture, boardWidth, boardHeight, layers, lightType, hasSpacers]);
 
+      const formatCurrency = (amount) => `RM ${amount.toLocaleString('en-MY')}`;
+
       // Update Layer property safely
       const updateActiveLayer = (key, val) => {
         if (!selectedLayerId) return;
@@ -1145,23 +1147,23 @@
                       <div className="space-y-2.5 text-xs">
                         <div className="flex justify-between text-zinc-400">
                           <span>Backing Board ({boardWidth * 2}x{boardHeight * 2} cm)</span>
-                          <span className="text-zinc-200 font-mono">${calculatedPricing.backing}</span>
+                          <span className="text-zinc-200 font-mono">{formatCurrency(calculatedPricing.backing)}</span>
                         </div>
                         <div className="flex justify-between text-zinc-400">
                           <span>Signboard Silhouette Cut ({boardShape})</span>
-                          <span className="text-zinc-200 font-mono">${calculatedPricing.structural}</span>
+                          <span className="text-zinc-200 font-mono">{formatCurrency(calculatedPricing.structural)}</span>
                         </div>
                         <div className="flex justify-between text-zinc-400">
                           <span>Illuminated Light Tubes ({lightType})</span>
-                          <span className="text-zinc-200 font-mono">${calculatedPricing.tubes}</span>
+                          <span className="text-zinc-200 font-mono">{formatCurrency(calculatedPricing.tubes)}</span>
                         </div>
                         <div className="flex justify-between text-zinc-400">
                           <span>Mounting Standoff Accessories</span>
-                          <span className="text-zinc-200 font-mono">${calculatedPricing.hardware}</span>
+                          <span className="text-zinc-200 font-mono">{formatCurrency(calculatedPricing.hardware)}</span>
                         </div>
                         <div className="border-t border-zinc-800 pt-3 flex justify-between text-sm font-bold text-zinc-200">
                           <span>Estimated Price Total</span>
-                          <span className="text-red-500 font-mono">${calculatedPricing.total}</span>
+                          <span className="text-red-500 font-mono">{formatCurrency(calculatedPricing.total)}</span>
                         </div>
                       </div>
                     </div>
