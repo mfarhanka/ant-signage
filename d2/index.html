@@ -1388,7 +1388,7 @@
               <div className="flex items-center space-x-4">
                 <div className="text-right">
                   <span className="text-xs text-zinc-500 block">Estimated Cost</span>
-                  <span className="text-lg font-bold text-red-500 font-mono">${calculatedPricing.total} USD</span>
+                  <span className="text-lg font-bold text-red-500 font-mono">{formatCurrency(calculatedPricing.total)}</span>
                 </div>
                 <button
                   onClick={() => setIsQuoteModalOpen(true)}
@@ -1462,23 +1462,23 @@
                     <div className="space-y-2 text-xs">
                       <div className="flex justify-between text-zinc-400">
                         <span>Physical custom backing plate</span>
-                        <span className="text-zinc-200 font-mono">${calculatedPricing.backing}</span>
+                        <span className="text-zinc-200 font-mono">{formatCurrency(calculatedPricing.backing)}</span>
                       </div>
                       <div className="flex justify-between text-slate-400">
                         <span>CNC custom lettering & framework</span>
-                        <span className="text-zinc-200 font-mono">${calculatedPricing.structural}</span>
+                        <span className="text-zinc-200 font-mono">{formatCurrency(calculatedPricing.structural)}</span>
                       </div>
                       <div className="flex justify-between text-slate-400">
                         <span>Custom bent gas tubes / LED module channels</span>
-                        <span className="text-zinc-200 font-mono">${calculatedPricing.tubes}</span>
+                        <span className="text-zinc-200 font-mono">{formatCurrency(calculatedPricing.tubes)}</span>
                       </div>
                       <div className="flex justify-between text-slate-400">
                         <span>Hardware anchors & power converter kit</span>
-                        <span className="text-zinc-200 font-mono">${calculatedPricing.hardware}</span>
+                        <span className="text-zinc-200 font-mono">{formatCurrency(calculatedPricing.hardware)}</span>
                       </div>
                       <div className="border-t border-zinc-800 pt-3 flex justify-between text-base font-bold text-zinc-100">
                         <span>Estimated Quote Total</span>
-                        <span className="text-red-500 font-mono text-lg">${calculatedPricing.total} USD</span>
+                        <span className="text-red-500 font-mono text-lg">{formatCurrency(calculatedPricing.total)}</span>
                       </div>
                     </div>
                   </div>
